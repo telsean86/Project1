@@ -1,0 +1,553 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}- 기온{% endblock %}
+
+{% block content %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/js/isotope.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- 쿠키는 왠만해선 로컬에 넣기를... -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script>
+        $(function() {
+            if($.cookie("popup") == "none") { // 쿠키의 popup 속성이 none일 경우
+                $("#notice_wrap").hide(); // 팝업을 숨김
+            }
+
+            var $expChk = $("#expiresChk");
+            $(".closeBtn").on("click", closePop); // 닫기 버튼을 누를 경우 closePop() 함수를 호출하여 팝업을 닫음
+
+            function closePop() { // 닫기 버튼을 누를 경우 실행
+                var date = new Date();
+                var hour = 24;
+                date.setTime(date.getTime()+1000*60*60*hour); // getTime()은 Date타입 시간을 밀리초로 계산 1000*1은 1초
+
+
+                if ($expChk.is(":checked")) { // expiresChk label을 체크했을 경우
+                    $.cookie("popup", "none", {expires:date, path:"/"});
+                    // 제이쿼리 cookie() 함수 사용
+                    // 쿠키의 popup 속성을 none로 설정함
+                    // 3일동안 이를 유지함
+                    // 해당 페이지에서만 이 쿠키를 저장함
+                }
+                $("#notice_wrap").fadeOut("fast"); // 팝업창을 사라지게 함
+            }
+        });
+    </script>
+    <style>
+        #notice_wrap{width: 100%;
+    max-width: 600px;
+    height: 100%;
+    max-height: 580px;
+    margin: 0 auto;
+    left: 400px;
+    top: 100px;
+    position: absolute;
+    z-index:9999;
+    }
+
+    #notice_wrap img{width: 100%;}
+
+    #notice_wrap .close_wrap{
+        padding: 10px 0;
+    background: #000;
+    color: #fff;
+    text-align: right;
+}
+
+.close_wrap {
+    padding: 10px 0;
+    background: #666;
+    color: #fff;
+    text-align: right;
+}
+.hd_pops_footer button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 0;
+    background: #393939;
+    color: #fff;
+}
+
+
+.closeBtn {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 0;
+    background: #393939;
+    color: #fff;
+}
+    header {
+    margin-top:20px;
+    }
+        .alert-info {
+        color: #666;
+        background-color: #fff;
+        border-color: #fff;
+        text-align:center;
+        font-weight: bold;
+    }
+        .loginsimbol {
+        width: 120px;
+        height: 100px;
+    }
+
+        .hero.is-primary .title {
+            color: #666;
+        }
+            .hero-body {
+                color: #666;
+                background-color: #fff;
+                border-color: #fff;
+            }
+            .button.is-info:hover {
+                color: #fff;
+                background-color: #aaa;
+                border-color: #666;
+            }
+            .button.is-info {
+                color: #666;
+                background-color: #fff;
+                border-color: #666;
+            }
+
+            label { margin-right: 10px; }
+
+            #form-ui {
+              margin-top: 25px;
+              margin-left: 25px;
+    }
+        a{
+    color:black;}
+    .col-3{
+    margin-top:20px;
+    margin-bottom: 20px;
+    }
+ .loader {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display:none;
+        z-index:9999;
+        }
+
+    @keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+    .col-12{
+        background-color: #666;
+        text-align:center;
+        margin:auto 0;
+        }
+
+
+
+</style>
+ <script type="text/javascript">
+        var maxCount = 1;                        // 카운트 최대값은 1
+        var count = 0;                           // 카운트, 0으로 초기화 설정
+
+        function CountChecked(field){                // field객체를 인자로 하는 CountChecked 함수 정의
+            if (field.checked) {                  // 만약 field의 속성이 checked 라면(사용자가 클릭해서 체크상태가 된다면)
+                count += 1;                        // count 1 증가
+            }
+            else {                              // 아니라면 (field의 속성이 checked가 아니라면)
+                count -= 1;                        // count 1 감소
+            }
+
+            if (count > maxCount) {                  // 만약 count 값이 maxCount 값보다 큰 경우라면
+                alert("최대 1개까지만 선택가능합니다!");   // alert 창을 띄움
+            field.checked = false;                  // (마지막 onclick한)field 객체의 checked를 false(checked가 아닌 상태)로 만든다.
+            count -= 1;                           // 이때 올라갔던 카운트를 취소처리해야 하므로 count를 1 감소시킨다.
+            }
+        }
+        </script>
+
+</head>
+<body>
+<div id="hd_pop">
+    <div id="notice_wrap">
+        <img src="https://postfiles.pstatic.net/MjAyMjExMDZfMjk5/MDAxNjY3NzE0ODg3MTU3.xFmG8J8uzd9hwIA2iF73Ts8oV9DNgaINIKG_a9Bg8lQg.7xjC13a-aiM7_OHBOgG950z1UELssHAw56QshE9LNzwg.PNG.pandk23/codiguide.png?type=w773" alt="공지사항">
+
+        <p class="close_wrap">
+            <input type="checkbox" name="expiresChk" id="expiresChk">
+            <label for="expiresChk">하루 동안 다시 열람하지 않습니다.</label>
+            <button class="closeBtn">닫기</button>
+        </p>
+    </div>
+</div>
+     <div class="loader"></div>
+    <script>
+       $(document).ready(function(){
+        $('#btn').click(function(){
+            $('.loader').fadeIn(8000);
+            $('.loader').fadeOut(500);
+        });
+       });
+    </script>
+          <div class="loader"></div>
+    <script>
+       $(document).ready(function(){
+        $('#btn1').click(function(){
+            $('.loader').fadeIn(8000);
+            $('.loader').fadeOut(500);
+        });
+       });
+    </script>
+
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="title" style="text-align: center">
+                    {% for weather in weather_data %}
+                    {{ weather.city }}의 현재 온도는 {{ weather.temperature }}° C 입니다.<br>
+                    {% endfor %}
+                </h2>
+                 {% if temps == 8 %}
+                    <h4 style="text-align: center; font-size:20px;">현재 기온은 "반팔과 반바지"의 코디를 추천합니다.</h4>
+                    {% elif temps == 7 %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 "반팔과 긴바지"의 코디를 추천합니다.</h4>
+                    {% elif temps == 6 %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 "셔츠와 블라우스"의 코디를 추천합니다.</h4>
+                    {% elif temps == 5 %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 "후드와 맨투맨"의 코디를 추천합니다.</h4>
+                    {% elif temps == 4 %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 겉옷을 꼭 챙기세요. "자켓과 가디건"의 코디를 추천합니다.</h4>
+                    {% elif temps == 3 %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 겉옷을 꼭 챙기세요."트렌치코트"의 코디를 추천합니다.</h4>
+                    {% elif temps == 2 %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 겉옷을 꼭 따뜻하게 챙겨입으세요. "코트와 숏패딩"의 코디를 추천합니다.</h4>
+                    {% else %}
+                        <h4 style="text-align: center; font-size:20px;">현재 기온은 겉옷을 꼭 따뜻하게 챙겨입어야해요. "패딩"의 코디를 추천합니다.</h4>
+                    {% endif %}
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded" id="w">
+                                {{ form.name }}
+                            </div>
+                            <div class="control">
+                                <button class="btn btn-outline-secondary" id="btn">
+                                    위치설정
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    {% for weather in weather_data %}
+
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">{{ weather.city }}</span>
+                                        <br>
+                                        <span class="subtitle" name="weather_temperature"value="{{ weather.temperature }}">{{ weather.temperature }}° C</span>
+                                        <br> {{ weather.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="text-align:center;">
+        <div class="row" id="container1" style="align:center;">
+        {% for weather in weather_data1 %}
+        <div class="col">
+                    <driv class="card"><br>
+                        <span class="price_badge">{{ weather.dt|slice:"13"}}시</span><br>
+                      <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image"style="width:100px; margin-left:30%;">
+                      <div class="card-body" style="text-align:center;">
+                          <strong class="card-title">{{ weather.city }}</strong><br>
+                          <span class="price_badge">{{ weather.tempnext }}° C</span><br>
+                          <p>-----------------------------</p>
+                          <span class="price_badge">{{ weather.dt2|slice:"13" }}시</span><br>
+                          <img src="http://openweathermap.org/img/w/{{ weather.icon2 }}.png" alt="Image"style="width:100px;"><br>
+                          <span class="price_badge">{{ weather.tempnext9 }}° C</span>
+                      </div></a>
+                    </driv>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <form method="get">
+        <div id="form-ui" style="text-align:center">
+            {% if user.is_authenticated %}
+            <label><input type="radio" value="{{user.style}}" name="f">&nbsp;My style({{user.style}})</label>&emsp;
+            {% endif %}
+            <label><input type="radio" value="페미닌" name="f">&nbsp;페미닌</label>&emsp;
+            <label><input type="radio" value="모던시크" name="f">&nbsp;모던시크</label>&emsp;
+            <label><input type="radio" value="스트릿" name="f">&nbsp;스트릿</label>&emsp;
+            <label><input type="radio" value="캐주얼" name="f">&nbsp;캐주얼</label>&emsp;
+            <label><input type="radio" value="러블리" name="f">&nbsp;러블리</label>&emsp;
+            <label><input type="radio" value="심플베이직" name="f">&nbsp;심플베이직</label>
+            <script>
+        function check() {
+  [].forEach.call(document.querySelectorAll('input[type="radio"]'), function (el) {
+    el.checked = true;
+  });
+}
+    </script>
+            <a href="javascript:check()">
+                <button type="submit" class="btn btn-outline-secondary" id="btn1">조회</button>
+
+            </a>
+        </div>
+    </form>
+
+        {% endfor %}
+
+
+<br>
+
+            <div class="row" id="container">
+                {% if user.is_authenticated %}
+                <div class="col-12" style="background-color: #ff7c98; text-align:center;
+            color: #fff; font-size: 16px; border-radius:0.25rem; padding: 0.75rem 1.25rem;">{{user.username}}님에게 추천드립니다.</div>
+                <div style="width:18.5%; margin:10px 10px 10px 10px;">
+                    <driv class="card">
+                        {% if randomot.image %}
+                      <img class="card-img-top" src="{{randomot.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{randomot.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{randomot.name|truncatechars:9}}</strong>
+                        <a href="{{randomot.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{randomot.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+                <div style="width:18.5%; margin:10px 10px 10px 10px;">
+                    <driv class="card">
+                        {% if randomto.image %}
+                      <img class="card-img-top" src="{{randomto.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{randomto.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{randomto.name|truncatechars:9}}</strong>
+                        <a href="{{randomto.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{randomto.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+                <div style="width:18.5%; margin:10px 10px 10px 10px;">
+                    <driv class="card">
+                        {% if randomon.image %}
+                      <img class="card-img-top" src="{{randomon.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{randomon.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{randomon.name|truncatechars:9}}</strong>
+                        <a href="{{randomon.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{randomon.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+                <div style="width:18.5%; margin:10px 10px 10px 10px;">
+                    <driv class="card">
+                        {% if randomsk.image %}
+                      <img class="card-img-top" src="{{randomsk.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{randomsk.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{randomsk.name|truncatechars:9}}</strong>
+                        <a href="{{randomsk.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{randomsk.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+                <div style="width:18.5%; margin:10px 10px 10px 10px;">
+                    <driv class="card">
+                        {% if randombt.image %}
+                      <img class="card-img-top" src="{{randombt.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{randombt.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{randombt.name|truncatechars:9}}</strong>
+                        <a href="{{randombt.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{randombt.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+                {% else %}
+                {% endif %}
+
+            <div class="col-12" style="background-color: #666; text-align:center;
+            color: #fff; font-size: 16px; border-radius:0.25rem; padding: 0.75rem 1.25rem;">OUTER</div>
+                {% if not products_outer %}
+                <div style="text-align:center; font-size: 30px;"><br>"해당상품이 없습니다"<br><br></div>
+                {% else %}
+                    {% for product in products_outer %}
+                <div class="col-3">
+                    <driv class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+
+            {% endfor %}
+                {% endif %}
+                <div class="col-12" style="background-color: #666; text-align:center;
+            color: #fff; font-size: 16px; border-radius:0.25rem; padding: 0.75rem 1.25rem;">TOP</div>
+                {% if not products_top %}
+                <div style="text-align:center; font-size: 30px;"><br>"해당상품이 없습니다"<br><br></div>
+                {% else %}
+                {% for product in products_top %}
+                <div class="col-3">
+                    <driv class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+            {% endfor %}
+                {% endif %}
+                <div class="col-12" style="background-color: #666; text-align:center;
+            color: #fff; font-size: 16px; border-radius:0.25rem; padding: 0.75rem 1.25rem;">ONEPIECE</div>
+                {% if not products_onepiece %}
+                <div style="text-align:center; font-size: 30px;"><br>"해당상품이 없습니다"<br><br></div>
+                {% else %}
+                {% for product in products_onepiece %}
+                <div class="col-3">
+                    <driv class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}" >
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+            {% endfor %}
+                {% endif %}
+                <div class="col-12" style="background-color: #666; text-align:center;
+            color: #fff; font-size: 16px; border-radius:0.25rem; padding: 0.75rem 1.25rem;">SKIRT</div>
+                {% if not products_skirt %}
+                <div style="text-align:center; font-size: 30px;"><br>"해당상품이 없습니다"<br><br></div>
+                {% else %}
+                {% for product in products_skirt %}
+
+                <div class="col-3">
+                    <driv class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}">
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+            {% endfor %}
+                {% endif %}
+                <div class="col-12" style="background-color: #666; text-align:center;
+            color: #fff; font-size: 16px; border-radius:0.25rem; padding: 0.75rem 1.25rem;">BOTTOM</div>
+                {% if not products_bottom %}
+                <div style="text-align:center; font-size: 30px;"><br>"해당상품이 없습니다"<br><br></div>
+                {% else %}
+                {% for product in products_bottom %}
+                <div class="col-3">
+                    <driv class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}">
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </driv>
+                </div>
+
+            {% endfor %}
+
+                {% endif %}
+
+            </div>
+
+
+</body>
+{% endblock %}

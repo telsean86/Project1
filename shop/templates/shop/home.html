@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}- home{% endblock %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css">
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+ <!--  폰트어썸 cdn 주소 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+    <style>
+        /* 위로가기 버튼 */
+    .go_top{
+            width:40px;
+            height:40px;
+            position: fixed;
+            background:#333;
+            color:#fff;
+            right:50px;
+            bottom:50px;
+            text-align: center;
+            line-height: 40px;
+
+            display:none;
+    }
+        .main_contents{
+        /*  컨텐트 부분  */
+            position:relative;
+            margin:0 auto;
+            width:100%;
+            height:100%;
+           /* border:1px solid #666666; */
+        }
+        .search{
+            border-radius: 5%;
+
+        }
+        #search-location{
+            width:30%;
+            height:30px;
+            border:none;
+        }
+
+
+     /*  슬라이드 배너 서식  */
+        main .slide{
+            width:100%;
+            margin:0px auto;
+            position:relative;
+        }
+        .slide > ul {
+            display:flex;
+            width:300%;
+
+          /*    이미지가 3장이므로 100% x 3 = 300% */
+        }
+
+        .slide > ul > li {
+            width: 100%;
+            list-style:none;
+        }
+
+        .slide > ul > li > img {
+            width:100%;
+        /*    반응형 이미지 */
+        }
+        /* 방향버튼 서식 */
+          i.fa-angle-left, i.fa-angle-right{
+            position:absolute;
+            top:45%;
+            font-size:50px;
+            color:#fff;
+            padding:6px 10px;
+            cursor:pointer;
+
+          }
+          i.fa-angle-left{left:0px;}
+          i.fa-angle-right{right:0px;}
+
+
+        /*<!--검색바(2)-->*/
+
+<!--        .slide1:hover{-->
+<!--            background: white url("static/accounts/image/slide1.jpg") no-repeat;-->
+<!--        }-->
+<!--        .slide2:hover{-->
+<!--            background: white url("static/accounts/image/slide2.jpg") no-repeat;-->
+<!--        }-->
+<!--        .slide3:hover{-->
+<!--            background: white url("static/accounts/image/slide3.jpg") no-repeat;-->
+<!--        }-->
+<!--        .slide4:hover{-->
+<!--            background: white url("static/accounts/image/slide4.jpg") no-repeat;-->
+<!--        }-->
+
+<!--        img {-->
+<!--        position : absolute;-->
+<!--        width: 17px;-->
+<!--        top: 10px;-->
+<!--        right: 12px;-->
+<!--        margin: 0;-->
+<!--        }-->
+.row {
+    padding:10px;
+}
+.list-group{
+    margin-left:10px;
+   }
+.list-group-item {
+    color:#ccc;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #666;
+    border-color: #666;
+}
+.alert-info {
+    color: #fff;
+    background-color: #666;
+    border-color: #666;
+}
+.row1{
+padding:0% 6%;
+}
+.card{
+    margin:30px;
+    border-color:#ccc;
+}
+.card-img-top{
+  width: 100%;
+}
+.btn-primary {
+    color: #000;
+    background-color: #fff;
+    border-color: #999;
+}
+.btn:hover {
+    color:#fff;
+    background-color:#666;
+    border-color:#666;
+
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    color: #000;
+    background-color: #666;
+    border-color: #666;
+}
+.list-group a:hover{
+    color:#fff;
+    background-color:#666;
+    opacity:0.8;
+}
+
+#product_detail{
+    text-decoration: none;
+}
+#product_detail:hover{
+
+    color:black;
+}
+.price_badge{
+    font-weight: bold;
+}
+
+         </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+    $(function(){
+
+
+
+      // 메인슬라이드 구현하기
+      //1. 1번슬라이드의 좌측에 4번 슬라이드가 위치하도록 순서를 앞으로 배치한다.
+      //A insertBefore B, A insertAfter B : 자리배치 순서 변경하기
+
+      //마지막 목록을 첫번째 목록의 앞으로 자리를 옮긴다.
+      $('.slide > ul > li:last-child').insertBefore('.slide > ul >  li:first-child');
+
+      //1번 사진이 가운데 보이도록 왼쪽으로 이미지 1장의 너비만큼 이동한다.
+      // $('.slide > ul').css('margin-left','-1600px');
+      $('.slide > ul').css('margin-left','-100%');
+
+      // 왼쪽으로 1칸씩 이동하는 함수
+      function moveLeft(){
+        // $('.slide > ul').animate({'margin-left':'-3200px'}, 500, function(){
+        $('.slide > ul').animate({'margin-left':'-200%'}, 500, function(){
+          $('.slide > ul > li:first-child').insertAfter('.slide > ul > li:last-child');
+          //이미지목록이 옆으로 한칸 더 이동했으므로 오른쪽으로 다시 한칸 이동하게 해준다.
+          // $('.slide > ul').css('margin-left','-1600px');
+          $('.slide > ul').css('margin-left','-100%');
+        });
+      }
+
+      function moveRight(){
+        $('.slide > ul').animate({'margin-left':'0px'},500, function(){
+          $('.slide > ul > li:last-child').insertBefore('.slide > ul > li:first-child');
+          // $('.slide > ul').css('margin-left','-1600px');
+          $('.slide > ul').css('margin-left','-100%');
+        });
+      }
+
+      //setInterval(함수명, 시간);
+      let Timer = setInterval(moveLeft, 4000);
+
+      //버튼을 클릭시 해당하는 함수를 호출하여 움직이게 하기
+      $('.slide i.fa-angle-left').click(function(){
+        moveRight();
+
+      });
+
+      $('.slide i.fa-angle-right').click(function(){
+        moveLeft();
+      });
+
+      //양쪽 좌, 우버튼에 마우스 오버시 시간을 제거하여 멈추게 하고
+      $('.slide i.fas').mouseenter(function(){
+        clearInterval(Timer);
+      });
+
+      //마우스 아웃시 시간을 생성하여 움직이게 한다.
+      $('.slide i.fas').mouseleave(function(){
+        Timer = setInterval(moveLeft, 4000);
+      });
+    });
+
+
+    $(function(){ /* 윈도우에 스크롤이 300px 이상 생기면
+        go_top 나타남, 아니라면 사라짐 */
+        $(window).scroll(function(){
+            if($(this).scrollTop()>=500){
+                $('.go_top').fadeIn();
+
+            }else{
+                $('.go_top').fadeOut();
+
+            }
+        });
+        // go_top 버튼 클릭하면 html,body의 스크롤양이 0으로 바뀌도록 0.5s 함
+        $('.go_top').click(function(e){
+            e.preventDefault();
+            $('html, body').stop().animate({scrollTop:0},500);
+        });
+    })
+  </script>
+</head>
+
+<body>
+  <!-- 슬라이드 배너 영역 -->
+  <main>
+        <article class="slide"><!--  1500*400 -->
+          <ul>
+            <li><img src="static/accounts/image/slides1.png" alt="slide01"></li>
+           <li><img src="static/accounts/image/slides2.png" alt="slide02"></li>
+           <li><img src="static/accounts/image/slides3.png" alt="slide03"></li>
+
+          </ul>
+          <!-- 방향버튼 -->
+          <i class="fas fa-angle-left"></i>
+          <i class="fas fa-angle-right"></i>
+
+          <!-- 콘트롤버튼 -->
+
+          <!-- 페이지번호, 스탑, 플레이 -->
+        </article>
+    </main>
+
+
+    <br><br>
+<!--    <div style="text-align:center"><b>기온별 코디</b></div>-->
+    <br><br>
+  <!-- <div class="list-group">
+             <a href=# class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a></div> -->
+
+
+
+
+
+    </div>
+<!--<div class="row1">-->
+<!--&lt;!&ndash;        <div class="col-2">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="list-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a href="{% url 'main_product_all' %}" class="list-group-item {% if not current_category %}active{% endif %}">All</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                {% for c in categories %}&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a href="{{c.get_absolute_url}}" class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                {% endfor %}&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--        <div class="col">-->
+<!--            <div class="alert alert-info" role="alert">-->
+<!--              {% if current_category %}{{current_category.name}}{% else %}All Products{% endif %}-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--            {% for product in products %}-->
+
+<!--                <div class="col-3">-->
+<!--                    <div class="card">-->
+<!--                        {% if product.image %}-->
+<!--                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">-->
+<!--                        {% else %}-->
+
+<!--                        {% endif %}-->
+<!--                        <a href="{{product.get_absolute_url}}" id="product_detail">-->
+<!--                      <div class="card-body">-->
+<!--                          <b class="card-title">{{product.name}}</b>-->
+<!--                        <a href="{{product.get_absolute_url}}" class="btn btn-sm float-right">상세보기</a><br><br>-->
+<!--&lt;!&ndash;                        <span class="badge badge-secondary">₩&nbsp{{product.price}}</span>&ndash;&gt;-->
+<!--                          <p class="price_badge">₩&nbsp{{product.price|intcomma}}</p>-->
+<!--                      </div></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<main>
+    <div class="explane" style="text-align:center;">
+        <img src="/../static/shop/image/about1.png" width="50%">
+    </div>
+</main>
+<br>
+
+<!--하단 위치기반 검색바(2)-->
+
+</div>
+<!--위로가기 버튼-->
+<a href="" class="go_top">
+    <i class="fas fa-arrow-up"></i>
+
+</a>
+</body>
+</html>
+{% endblock %}

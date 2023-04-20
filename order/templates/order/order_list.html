@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %} Order List {% endblock %}
+
+{% block content %}
+<style>
+ .deletetitle{
+                font-weight: 500;
+                margin-left:10%;
+                margin-top:1%;
+                color:#666;
+          }
+  .deletetitle2{
+                font-weight: 500;
+                margin-left:10%;
+                margin-top:1%;
+                color:#666;
+                font-size:16px;
+  }
+  th, td {
+  text-align:center;}
+
+  a:hover{
+  text-decoration:none;}
+
+  .ordertr:hover{
+  background-color:#efefef; border-color:#efefef;
+
+  }
+</style>
+<h3 class="deletetitle">주문내역 조회</h3>
+<h5 class="deletetitle2">고객님께서 주문하신 내역의 리스트를 보여드립니다. <a href="#" ><i class="fa-solid fa-backward" onClick="javascript:history.go(-1);" style="margin-left:80%;">&nbsp 마이페이지</i></a>
+ </h5>
+<hr>
+
+<div class="row mt-5" >
+    <div class="col-12">
+        <table class="table table-light" style="width:80%; margin:0 auto; margin-top:30px; margin-bottom:100px;">
+            <thead style="color:#ffffff; background-color:#c0c0c0;border-color:#efefef;">
+            <tr>
+
+                <th scope="col"> 주문번호</th>
+                <th scope="col">주문날짜</th>
+                 <th scope="col">주문금액</th>
+
+            </tr>
+            </thead>
+            <tbody class="text-dark">
+               {% for order in orders %}
+               {% if request.user == order.user %}
+
+
+            <tr class="ordertr">
+                <td scope="row"><a href="../complete/?order_id={{ order.id }}">{{order.id}}</a></td>
+                <td scope="row"><a href="../complete/?order_id={{ order.id }}">{{order.updated|date:'Y년m월d일 H시i분'}}</a></td>
+                {% load humanize %}
+                <td scope="row"><a href="../complete/?order_id={{ order.id }}">{{order.get_total_price| intcomma }}원</a></td>
+
+            </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+ <script language="JavaScript" type="text/JavaScript">
+        var banner = new Array();
+
+         banner[0]="<a href='#'><img src='../../static/blog/image/banner01.png' border='0' width='100%' height='100%'></a>";
+         banner[1]="<a href='#'><img src='../../static/blog/image/banner02.png' width='100%' height='100%'></a>";
+         banner[2]="<a href='#'><img src='../../static/blog/image/banner03.png' border='0' width='100%' height='100%'></a>";
+         banner[3]="<a href='#'><img src='../../static/blog/image/banner04.png' border='0' width='100%' height='100%'></a>";
+         banner[4]="<a href='#'><img src='../../static/blog/image/banner05.png' border='0' width='100%' height='100%'></a>";
+         banner[5]="<a href='#'><img src='../../static/blog/image/banner06.png' border='0' width='100%' height='100%'></a>";
+         banner[6]="<a href='#'><img src='../../static/blog/image/banner07.png' border='0' width='100%' height='100%'></a>";
+
+
+         var random_banner = Math.floor(Math.random()*(banner.length));
+     </script>
+     <script>document.write(banner[random_banner]);</script>
+
+{% endblock %}

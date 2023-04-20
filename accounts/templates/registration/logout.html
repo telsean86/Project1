@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}- Logout{% endblock %}
+
+{% block content %}
+<style>
+    .alert-info {
+    color: #000;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+</style>
+<body>
+<br><br>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 panel panel-default outline-secondary">
+            <div class="alert alert-info">로그아웃이 완료 되었습니다.</div>
+            <a class="btn btn-outline-secondary" href="{% url 'login'%}">Login</a>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</body>
+{% endblock %}

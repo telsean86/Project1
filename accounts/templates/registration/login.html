@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+
+{% block title %}Category Page
+{% endblock %}
+
+{% block content %}
+    <style>
+    #noid{
+    font-size:14px;
+    margin-left:70%;
+
+
+    }
+    #noid:hover{
+    text-decoration:none;
+}
+
+ li { list-style: none; }
+    #view {
+        width: 500px;
+        margin:20px auto;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .view_slide {
+        width: 100%;
+    }
+
+    .view_slide li {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0; opacity:0;
+        left: 0;
+        transition: all 0.5s ease;
+    }
+
+    .view_slide li img {
+        width: 500px;
+        height: 200px;
+    }
+
+
+    .dot {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .dot li {
+        background: #93071c;
+        width: 20px; border-radius: 50%;
+        height: 20px;
+        margin: 10px;
+        float: left;
+        cursor: pointer; transition: all 0.5s ease;
+    }
+<!--여기부터 폼-->
+    .form-control{
+           width:100%;
+           height:50px;
+           font-size:20px;
+           border:0.5px solid #666;
+         }
+     .login_content{
+           text-align:center;
+           font-weight: bold;
+           font-size: 20px;
+           }
+        #logo{
+             width:200px;
+             height:200px;
+             padding:10px;
+             margin:20px;
+<!--             border:0.8px solid #666;-->
+             border-radius:50%;
+     }
+        }
+        #brand{
+            position:fixed;
+            left:100px;
+            color:#ffffff;
+        }
+
+        .login{
+            margin-right:20px;
+        }
+        .menu:hover{
+            color:#565656;
+        }
+
+        main{
+            padding-top:75px;
+        }
+        .row {
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+        .minisim{
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        .subsim{
+           float:left;
+           margin:0px 20px;
+           background-color:#fff;
+<!--           border:1px solid #666;-->
+           border-radius:50%;
+           list-style:none;
+           display:flex;
+           width:50px;
+           height:50px;
+        }
+
+
+        .sulmyeong{
+           color:#565656;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 20px;
+        letter-spacing: 0px;
+        word-spacing: 0px;
+        color: #000000;
+        font-weight: 700;
+        text-decoration: none solid rgb(68, 68, 68);
+        font-style: normal;
+        font-variant: small-caps;
+        text-transform: uppercase;
+        }
+        #sbtn{
+            width:400px;
+            height:50px;
+            font-color:gray;
+            background-color:#fff;
+            border-color: #666;
+            color:#000;
+            font-weight: bold;
+            font-size: 18px;
+<!--            border-radius:30px;-->
+            margin-bottom:20px;
+            padding-right:50px;
+           }
+        #sbtn:hover{
+            background-color:#666;
+            color:#fff
+
+        }
+
+
+    </style>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+
+    <script>
+        $(function(){
+        $('#sAgreeAllChecked').click(function(){
+        $('#agree_service_check0').prop("checked",true);
+        $(this).prop("checked",true);
+        $('#is_sms0').prop("checked",true);
+        $('#is_news_mail0').prop("checked",true);
+        $('#agree_consignment_check1').prop("checked",true);
+        $('#agree_information_check2').prop("checked",true);
+        $('#agree_privacy_optional_check0').prop("checked",true);
+        $('#agree_privacy_check0').prop("checked",true);
+
+
+
+
+        });
+        });
+    </script>
+    <script type="text/javascript">
+        var maxCount = 1;                        // 카운트 최대값은 1
+        var count = 0;                           // 카운트, 0으로 초기화 설정
+
+        function CountChecked(field){                // field객체를 인자로 하는 CountChecked 함수 정의
+            if (field.checked) {                  // 만약 field의 속성이 checked 라면(사용자가 클릭해서 체크상태가 된다면)
+                count += 1;                        // count 1 증가
+            }
+            else {                              // 아니라면 (field의 속성이 checked가 아니라면)
+                count -= 1;                        // count 1 감소
+            }
+
+            if (count > maxCount) {                  // 만약 count 값이 maxCount 값보다 큰 경우라면
+                alert("최대 1개까지만 선택가능합니다!");   // alert 창을 띄움
+            field.checked = false;                  // (마지막 onclick한)field 객체의 checked를 false(checked가 아닌 상태)로 만든다.
+            count -= 1;                           // 이때 올라갔던 카운트를 취소처리해야 하므로 count를 1 감소시킨다.
+            }
+        }
+        </script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+
+
+<br>
+ <div class="login_content">
+<!--      <img src="https://mblogthumb-phinf.pstatic.net/MjAyMjA3MjhfMTE2/MDAxNjU4OTc2NDI5MzAx.dsmoIKU1B3lU6UopgF_u-atwDE-KBJMGDPDdjeMd7_8g.OzjtyB9PN688SHpaC1a57f5gaSxVWfUdGA5zAsPrmjIg.JPEG.hyeran0920/1658976223960.jpg?type=w800" id="logo" alt="logo" class="loginsimbol" width="100" height="80">-->
+     <div id="view">
+         <ul class="view_slide">
+             <li><img src="../../static/accounts/image/001.png" alt="img"></li>
+              <li><img src="../../static/accounts/image/002.png" alt="img"></li>
+        </ul>
+     <!--   <ul class="dot">
+            <li></li>
+            <li></li>
+
+        </ul>
+-->
+
+     </div>
+     <script>
+        $(".view_slide li:first").css("opacity",1);
+       $(".dot li:first").css("background", "#fff");
+
+       $(".dot li").click(function(){
+          var $index = $(this).index();
+          slide($index);
+          /*$(".view_slide li").css("opacity", 0);
+          $(".view_slide li").eq($index).css("opacity", 1);
+          $(".dot li").css("background", "#93071c");
+          $(this).css("background", "#fff"); */
+       });
+
+       setInterval("show()", 2000);
+       var cnt = 0;
+
+       function show(){
+          cnt++;
+
+          if( cnt < $(".view_slide li").length ) {
+                slide(cnt);
+         } else {
+             cnt=0;
+             slide(cnt);
+         }
+       }
+
+        function slide(cnt){
+              $(".view_slide li").css("opacity", 0);
+            $(".view_slide li").eq(cnt).css("opacity", 1);
+            $(".dot li").css("background", "#93071c");
+            $(".dot li").eq(cnt).css("background", "#fff");
+        }
+    </script>
+
+     <h3 class="sulmyeong">날꾸에 오신 것을 환영합니다</h3>
+     <div class="minisim">
+       <!--  <ul>
+             <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDdfODkg/MDAxNjY1MTI2NDY2ODA4.gN4w4tcNISAxGsub3CI21YwbIHxRa2J_4Rh6jgotGDwg.zfAQhOT1QBAyAMv_X1sWIPFMSoSluAS03Xk5Vq1_yrIg.PNG.pandk23/snowflakes.png?type=w773"></li>
+             <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDdfMjgg/MDAxNjY1MTI2NDY2ODA5.lEBMRaEV_vbT0N1-g7rffwi1WTfpAtwroVrTFMhh2qgg.MXgvUHxJY1tCJWaRa-xSV0C0E8Hww56viMBF3LSUq5Ug.PNG.pandk23/wind.png?type=w773"></li>
+             <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDdfNyAg/MDAxNjY1MTI2NDY2ODEw.5ouElz1bhulHnPDVA2dbuweiWuo9hvFiqRqRbzBBrugg.LpCK4yfYb4iVYHN2Q_0cpBTw93G8FK9SEIkdXY16JGMg.PNG.pandk23/eclipse.png?type=w773" id="" alt=""></li>
+             <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDdfOSAg/MDAxNjY1MTI2NDk0NDM5.xbDHDKdqucSmae2Ok8X_U-lA7ujuxRAFitbArSZCVscg.8ut9BGpKgMkFhdHLchm3ocGyZO6e3I_ort8PRs10tygg.PNG.pandk23/cloudy.png?type=w773"></li>
+             <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDdfMjc5/MDAxNjY1MTI2NDY2ODEy.x65q6Ga8RQ7Du8CkrDZwU0Erf3Nx5nLFUtWLJvB7PS4g.QmRYPTOr8AopnGGpGxbrizSWCgMq9u8xTe1fr4bIZMkg.PNG.pandk23/umbrella.png?type=w773"></li>
+         </ul>  -->
+         <ul>
+               <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDhfMTkx/MDAxNjY1MjI3NTYyNjMw.__OzQSklgtXtDN62zqPVM5bOwofYabEII1Uo3bdL7d8g.x14aci8NuNM3EQTuh0dx0kR7x22BE0rLxwe4p88g1vYg.PNG.pandk23/003.png?type=w773"></li>
+               <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDhfMjQ5/MDAxNjY1MjI3NTYyNjMw.EWajv86McDXCUJ-kgPay7JvAYGCaUJaheA6Mi34dI_8g.W9M0dyOW0Yt49v0FodpGFAuY-4KY-8eOy07zjcyVpO8g.PNG.pandk23/004.png?type=w773"></li>
+               <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDhfMjc1/MDAxNjY1MjI3NTYyNjMw.hhXUVmJ9nLuTasXUHPlXNqmP0KqgRrXyOmwGkpx6LiIg.ziM21-sTMyrDzDL7B4sm226pJDN5JOad0HZuHY849IQg.PNG.pandk23/002.png?type=w773"></li>
+               <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDhfMjgw/MDAxNjY1MjI3NTYyNjI4.snr8YHp35-sS2Z_LrnAZAM8yDrZR93dTOFNvgmonq04g.Oi1xNhmEXvAcEv73dez3N9XE4LV52SA9D3sgFPiZ_hgg.PNG.pandk23/001.png?type=w773"></li>
+               <li class="subsim"><img src="https://postfiles.pstatic.net/MjAyMjEwMDhfNSAg/MDAxNjY1MjI3NTYyNjI5.1hJYhJXo8VHlhrFq-_eQbnrkSvZvHlEWhCfpDHCdBhkg.7Mcn4Ree87rJIPyGnbjmSQGGPdKr-nihYZUxboTlp6Ag.PNG.pandk23/005.png?type=w773"></li>
+         </ul>
+     </div><br>
+    <div class="row justify-content-center">
+    <form method="post" action="{% url 'login' %}" class="content2">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}" placeholder="&nbsp아이디">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" id="password"
+                   value="{{ form.password.value|default_if_none:'' }}" placeholder="&nbsp비밀번호">
+        </div>
+         <h5 id="noid"><a href="{% url 'register' %}">회원가입 하러가기</a></h5>
+
+<!--        <button type="submit" class="btn btn-primary" id="sbtn">L O G I N</button>-->
+            <button type="submit" class="btn btn-primary col-md-3" id="sbtn">L O G I N</button>
+    </form>
+</div>
+ </div>
+{% endblock %}

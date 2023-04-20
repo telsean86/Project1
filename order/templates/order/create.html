@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    csrf_token = '{{csrf_token}}';
+    order_create_url = '{% url "orders:order_create_ajax" %}';
+    order_checkout_url = '{% url "orders:order_checkout" %}';
+    order_validation_url = '{% url "orders:order_validation" %}';
+    order_complete_url = '{% url "orders:order_complete" %}';
+</script>
+
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+
+{% load static %}
+<script src="{% static 'js/checkout.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<style>
+ .row{
+ width:80%;
+ margin:3% auto;
+ }
+ .alert-info {
+    color: #fff;
+    background-color: #666;
+    border-color: #666;
+}
+.alert-success {
+    color: #fff;
+    background-color: #999;
+    border-color: #999;
+}
+table{
+ width:300px;
+ height: 250px;
+}
+form-control{
+    width:300px;}
+</style>
+
+<div class="row">
+    <div class="col">
+        <div class="alert alert-info" role="alert">주문 내역</div>
+        <ul class="list-group">
+            {% for item in cart %}
+                <li class="list-group-item">
+                    {{item.product.name}} {{item.quantity}}개 :
+                    <span>{{item.total_price|intcomma}}</span>
+                </li>
+            {% endfor %}
+            {% if cart.coupon %}
+                <li class="list-group-item">
+                    "{{cart.coupon.code}}" ( - {{cart.coupon.amount|intcomma}})
+                    <span> {{cart.get_total_discount|intcomma}}</span>
+                </li>
+            {% endif %}
+        </ul>
+        <div class="alert alert-success" role="alert">총 가격 : {{cart.get_total_price|intcomma}}</div>
+        <form action="" method="post" class="order-form">{% csrf_token %}
+            <table class="t1">
+                <thead>
+                <tr>
+                    <td class="t1-baqh"></td>
+                    <td class="t1-in">
+                        <input type="hidden" class="form-control" name="user" id="user1" placeholder="아이디"
+                               value="{{ user.id }}">
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="t1-baqh">전화번호: </td>
+                    <td class="t1-in">
+                        <input type="text" class="form-control" name="tel" id="tel1" placeholder="전화번호를 입력해주세요"
+                               value="{{ user.tel }}"style="width:150%">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="t1-baqh">이메일: </td>
+                    <td class="t1-in">
+                        <input type="text" class="form-control" name="email" id="email2" placeholder="이메일을 입력해주세요"
+                               value="{{ user.email }}"style="width:150%">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="t1-baqh">주소: </td>
+                    <td class="t1-in">
+                        <input type="text" class="form-control" name="address" id="address1" placeholder="주소를 입력해주세요"
+                               value="{{ user.address }}"style="width:150%">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="t1-baqh">우편번호: </td>
+                    <td class="t1-in">
+                          <input type="number" class="form-control" name="postal_code" id="postal_code1" placeholder="우편번호를 입력해주세요"
+                                 value="{{ user.postal_code }}"style="width:150%">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            {% csrf_token %}
+            <input type="hidden" name="pre_order_id" value="0">
+            <input type="hidden" name="amount" value="{{cart.get_total_price|intcomma}}">
+            <input type="submit" class="btn btn-outline-secondary float-right" value="구매하기">
+        </form>
+    </div>
+</div>
+{% endblock %}

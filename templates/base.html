@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nalggu{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+     <link href="https://mblogthumb-phinf.pstatic.net/MjAyMjA3MjlfMSAg/MDAxNjU5MDk3MjQxMDc4.6FFUCeOtKo1U7HhhpXGCsRH1yNFNgP4a1iZ0hyPlB5Eg.8yM-YHihi5HLANSZv1QbbmUojPY94-9k7M_A_pyGOREg.PNG.hyeran0920/Logo1-3.png?type=w800"rel="shortcut icon" type="image/x-icon">
+    <!--  폰트어썸 cdn 주소 -->
+    <script src="https://kit.fontawesome.com/9c0b7c06e8.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    {% block script %}
+    {% endblock %}
+
+    {% block style %}
+    {% endblock %}
+    <style>
+    #icon:hover {
+        color:#ff7c98; }
+         #icon2:hover {
+        color:#ff7c98; }
+         #icon3:hover {
+        color:#ff7c98; }
+         #icon4:hover {
+        color:#ff7c98; }
+    * {
+    margin: 0;
+    padding: 0;
+    }
+    .container {
+        max-width: 100%;
+        width: 100%;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    header {
+
+    }
+    #login ul{
+   list-style:none;
+   padding:0;
+    }
+    #login li{
+        float:right;
+    }
+    #login a{
+      color:#666;
+}
+    padding-bottom{
+        color:#000;
+        background-color:#ccc;
+        border-color:#000;
+    }
+    #headernav{
+    width:100%;
+    border-top:solid 1px #ccc;
+    border-bottom:solid 1px #ddd;
+    }
+    nav li{
+    padding-right:70px;
+    }
+    a{
+    color:black;}
+    nav a{
+        font-size:18px;
+        color:black;
+        font-weight: bold;
+      }
+     a:hover{
+        /*color:#ccc;*/
+         color:#ff7c98;
+      }
+
+    footer {
+          border-top: solid 2px #666;
+          padding: 30px;
+          margin-top:50px;
+          color:#000;
+    }
+    .footA {
+      margin-bottom: 10px;
+    }
+
+    .footA h2{
+       margin-top:0;
+       margin-bottom:10px;
+       font-family:'Montserrat',sans-serif;
+       font-size:30px;
+       letter-spacing:0.2em;
+    }
+
+        .footA p {
+                margin-top:0;
+                margin-bottom:0;
+                font-size:14px;
+        }
+
+        .footA a {
+                color:inherit;
+                text-decoration:none;
+        }
+        /*푸터B: 푸터 메뉴*/
+        .footB div {
+                margin-bottom:20px;
+        }
+
+        .footB h3{
+                margin-top:0;
+                margin-bottom:10px;
+                border-bottom:solid 1px currentColor;
+                font-size:14px;
+        }
+
+        .footB ul{
+                list-style: none;
+                margin:0;
+                padding:0;
+        }
+
+        .footB a {
+                display:block;
+                padding:5px;
+                color:inherit;
+                font-size:12px;
+                text-decoration:none;
+        }
+
+        .footB a:hover {
+                background-color:#ccc;
+        }
+
+
+                .footB {
+                        display:flex;
+                }
+                .footB div {
+                        flex:1;
+                }
+                .footB div:not(:first-child) {
+                        margin-left: 40px;
+                }
+
+        /*푸터C:저작권*/
+        .footC {
+            font-size:12px;
+            text-align:center;
+            font-family: 'Montserrat',sans-serif;
+        }
+        /*푸터D:SNS메뉴*/
+        .footD {
+                margin-top:20px;
+        }
+
+        .footD ul{
+                display:flex;
+                margin:0;
+                padding:0;
+                list-style: none;
+        }
+
+        .footD a {
+                display:block;
+                margin-right:8px;
+                padding:0;
+                color:inherit;
+                font-size:16px;
+                text-decoration:none;
+                border:solid 1px currentColor;
+                width:2em;
+                line-height:2em;
+                border-radius:50%;
+                text-align:center;
+        }
+
+        .footD a:hover {
+                background-color:#ccc;
+        }
+        #searchin{
+        width:200px;
+        height:38px;
+        border-top:1px;
+        border-left:1px;
+        border-right:1px;
+        }
+        .btn{
+        border-color:#ccc;
+        }
+
+ .loader {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display:none;
+        z-index:9999;
+        }
+
+    @keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+
+    </style>
+</head>
+<body>
+ <!--    로딩창-->
+     <div class="loader"></div>
+     <script>
+       $(document).ready(function(){
+        $('#btn').click(function(){
+            $('.loader').fadeIn(8000);
+            $('.loader').fadeOut(500);
+        });
+       });
+    </script>
+ <div class="loader"></div>
+      <script>
+       $(document).ready(function(){
+        $('#btn1').click(function(){
+            $('.loader').fadeIn(8000);
+            $('.loader').fadeOut(500);
+        });
+       });
+    </script>
+<span class="container">
+    <header class="header clearfix">
+        <span id="login">
+            {% if user.is_authenticated %}
+
+                <ul>
+                    <li class="nav-item"><a href="{% url 'mypage' %}" class="nav-link"><i class="fa-solid fa-user"></i>&nbsp;  {{user.get_username}} 님</a></li>
+                    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+
+                </ul>
+            {% else %}
+                <ul>
+                    <li class="nav-item"><a href="{% url 'register' %}" class="nav-link"><i class="fa-solid fa-user-plus"></i></a></li>
+                    <li class="nav-item"><a href="{% url 'login' %}" class="nav-link"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                </ul>
+            {% endif %}
+            </span>
+
+            <a class="d-flex justify-content-center" href="/">
+            <img src="https://mblogthumb-phinf.pstatic.net/MjAyMjA3MjlfMSAg/MDAxNjU5MDk3MjQxMDc4.6FFUCeOtKo1U7HhhpXGCsRH1yNFNgP4a1iZ0hyPlB5Eg.8yM-YHihi5HLANSZv1QbbmUojPY94-9k7M_A_pyGOREg.PNG.hyeran0920/Logo1-3.png?type=w800" alt="logo" class="loginsimbol" width="120" height="100">
+            </a>
+</header>
+</span>
+        <nav id="headernav" class="navbar navbar-expand-lg navbar">
+
+            <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+            <ul class="nav nav-fill">
+
+<!--                <li class="nav-item"><a href="/" class="active nav-link ">Home</a></li>-->
+<!--                <li class="nav-item"><a href="{% url 'post_list' %}" class="active nav-link ">Notice</a></li>-->
+                {% if user.is_authenticated %}
+
+<!--                마이페이지로 링크 연결 해야 함-->
+                <li class="nav-item"><a href="/" class="active nav-link ">Home</a></li>
+                <li class="nav-item"><a href="{% url 'weather:index' %}" class="active nav-link "id="btn1">Codi</a></li>
+                <li class="nav-item"><a href="{% url 'post_list' %}" class="active nav-link ">Notice</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'shop:product_all' %}">Product</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{% url 'cart:detail' %}">
+            {% if cart|length > 0 %}
+                    Cart
+                    {% load humanize %}
+                Total &nbsp {{cart.get_product_total| intcomma }}₩
+            {% else %}
+                    Cart
+            {% endif %}
+            </a>
+        </li>
+                {% else %}
+                 <li class="nav-item"><a href="/" class="active nav-link ">Home</a></li>
+                <li class="nav-item"><a href="{% url 'weather:index' %}" class="active nav-link " id="btn">Codi</a></li>
+                <li class="nav-item"><a href="{% url 'post_list' %}" class="active nav-link ">Notice</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'shop:product_all' %}">Product</a></li>
+                {% endif %}
+
+            </ul>
+                 &nbsp&nbsp
+                <form class="form-inline my-2 my-lg-0" action="{% url 'shop:search' %}" method="post">
+                {% csrf_token %}
+
+                <input id="searchin"class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+</div>
+
+
+    <div class="container">
+
+
+    {% block content %}
+
+    {% endblock %}
+    </div>
+
+    <footer>
+   <div class="container">
+      <div class="footA">
+      <h2>Nalggu</h2>
+      <p>주소 :서울특별시 성동구 살곶이길 200(사근동) 한양여자대학교<br>
+         <a href ="https://www.hywoman.ac.kr/ko/index.do">https://www.hywoman.ac.kr/ko/index.do</a>
+      </p>
+      </div>
+
+      <nav class="footB">
+         <div>
+         <h3>ABOUT</h3>
+            <ul>
+               <li><a>설립</a></li>
+               <li><a>주소</a></li>
+               <li><a>지도</a></li>
+               <li><a>스태프</a></li>
+            </ul>
+         </div>
+         <div>
+         <h3>SUPPORT</h3>
+            <ul>
+               <li><a>다운로드</a></li>
+               <li><a>메뉴얼</a></li>
+               <li><a>자주 묻는 질문</a></li>
+               <li><a>문의</a></li>
+            </ul>
+         </div>
+         <div>
+         <h3>CONTENTS</h3>
+            <ul>
+               <li><a>공지사항</a></li>
+               <li><a>비즈니스</a></li>
+               <li><a>프로필</a></li>
+               <li><a>개발자</a></li>
+            </ul>
+         </div>
+      </nav>
+
+      <div class="footC">
+         ⓒNalggu corp .All rights reserved.
+      </div>
+   </div>
+    </footer>
+</div>
+
+
+</body>
+</html>

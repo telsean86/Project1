@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Notice Page{% endblock %}
+
+{% block content %}
+<style>
+    .alert-info {
+    color: #000;
+    background-color: #fff;
+    border-color: #666;
+}
+.btn-primary {
+    color: #000;
+    background-color: #fff;
+    border-color: #666;
+    border-radius:30px;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #666;
+    border-color: #666;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    color: #000;
+    background-color: #666;
+    border-color: #666;
+}
+   .item{
+    list-style:none;
+    width:70%;
+    border:solid 1px #ccc;
+    border-radius:10px;
+    margin:0 auto;
+    padding:10px 10px 10px 20px;
+
+}
+.item:hover{
+background-color:#eee;}
+   h3{
+   margin-left:17%;
+   }
+
+</style>
+<body>
+<br>
+<h3 class="myboard_title">내가 쓴 글 보기</h3>
+<br>
+{% if not posts %}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 panel panel-default">
+    <div class="alert alert-info">작성하신 글이 없습니다.</div>
+    <a href="{% url 'mypage' %}">
+        <button type="button" class="btn btn-outline-secondary">마이페이지</button>
+    </a>
+
+   </div>
+    </div>
+    {% else %}
+    {% for post in posts %}
+
+        {% if request.user == post.author %}
+        <div class="container">
+            <ul class="list">
+                <li class="item">
+                    <h4><a href="/blog/post/{{ post.pk }}" id="post-title">{{ post.title }}</a></h4>
+                    <div class="content">{{ post.content|truncatewords:20 }}</div>
+                    <div class="info">
+                        <div class="published-date"><span>날짜 | </span>{{ post.published_date }}</div>
+                        <div class="author"><span>게시자 | </span>{{ post.author }}</div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+    {% endfor %}
+<br>
+<br>
+
+{% endif %}
+</body>
+ <!-- 배너 영역 -->
+  <script language="JavaScript" type="text/JavaScript">
+        var banner = new Array();
+
+         banner[0]="<a href='#'><img src='../../static/blog/image/banner01.png' border='0' width='100%' height='100%'></a>";
+         banner[1]="<a href='#'><img src='../../static/blog/image/banner02.png' width='100%' height='100%'></a>";
+         banner[2]="<a href='#'><img src='../../static/blog/image/banner03.png' border='0' width='100%' height='100%'></a>";
+         banner[3]="<a href='#'><img src='../../static/blog/image/banner04.png' border='0' width='100%' height='100%'></a>";
+         banner[4]="<a href='#'><img src='../../static/blog/image/banner05.png' border='0' width='100%' height='100%'></a>";
+         banner[5]="<a href='#'><img src='../../static/blog/image/banner06.png' border='0' width='100%' height='100%'></a>";
+         banner[6]="<a href='#'><img src='../../static/blog/image/banner07.png' border='0' width='100%' height='100%'></a>";
+
+
+         var random_banner = Math.floor(Math.random()*(banner.length));
+     </script>
+     <script>document.write(banner[random_banner]);</script>
+    {% endblock %}
+

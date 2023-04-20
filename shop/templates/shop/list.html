@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Category Page{% endblock %}
+{% block content %}
+<style>
+.row {
+    padding:10px;
+    margin: 0 auto;
+}
+.list-group{
+    margin-left:10px;
+   }
+.list-group-item {
+    color:#ccc;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #666;
+    border-color: #666;
+}
+.alert-info {
+    color: #fff;
+    background-color: #666;
+    border-color: #666;
+}
+.card{
+    margin:10px;
+    border-color:#ccc;
+}
+.card-img-top{
+  width: 100%;
+}
+
+.list-group a:hover{
+    color:#fff;
+    background-color:#666;
+    opacity:0.8;
+}
+
+#product_detail{
+    text-decoration: none;
+}
+#product_detail:hover{
+
+    color:black;
+}
+.price_badge{
+    font-weight: bold;
+}
+</style>
+
+<br>
+    <div class="row col-9">
+        <div class="col-2">
+            <div class="list-group">
+                <a href="{% url 'shop:product_all' %}" class="list-group-item {% if not current_category %}active{% endif %}">All</a>
+                {% for c in categories %}
+                    <a href="{{c.get_absolute_url}}" class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="alert alert-info" role="alert">
+              {% if current_category %}{{current_category.name}}{% else %}All Products{% endif %}
+            </div>
+            <div class="row">
+            {% for product in products %}
+                <div class="col-4">
+                    <div class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}" id="product_detail">
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+<!--                        <span class="badge badge-secondary">₩&nbsp{{product.price}}</span>-->
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </div>
+                </div>
+
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

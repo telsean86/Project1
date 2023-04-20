@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}Notice Page{% endblock %}
+
+{% block content %}
+<style>
+.recent{
+   margin:20px;
+}
+#post-title:hover{
+    text-decoration: none;
+    color:#000000;
+}
+
+.item{
+    list-style:none;
+    width:70%;
+    border:solid 1px #ccc;
+    border-radius:10px;
+    margin:0 auto;
+    padding:10px 10px 10px 20px;
+
+}
+.item:hover{
+background-color:#eee;}
+
+   .notice_title{
+        margin-top:1%;
+        font-weight: 500;
+   }
+   .add-post{
+       margin-top:1%;
+       margin-left: 74%;
+       font-size:20px;
+       font-weight: normal;
+   }
+   h3{
+   margin-left:15%;
+   }
+.page-link {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.page-item.active .page-link {
+ z-index: 1;
+ color: #000;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+
+}
+
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa;
+  border-color: #ccc;
+}
+
+</style>
+<body>
+<br>
+<h3 class="notice_title">&nbsp문의 게시판 </h3>
+
+<a class="add-post" href="{% url 'post_new' %}">
+        <i class="fas fa-plus-circle" id="add_post">&nbsp글 작성하기</i></a><br><br>
+
+{% for post in posts %}
+
+    <div class="container">
+        <ul class="list">
+            <li class="item">
+                <h4><a href="post/{{ post.pk }}" id="post-title">{{ post.title }}</a></h4>
+                <div class="content">{{ post.content|truncatewords:20 }}</div>
+                <div class="info">
+                    <div class="published-date"><span>날짜 | </span>{{ post.published_date }}</div>
+                    <div class="author"><span>게시자 | </span>{{ post.author }}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+{% endfor %}
+<!-- 페이징처리 시작 -->
+    <div id="paging">
+        <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+            <!-- 이전페이지 -->
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="{{ request.path }}?&page={{ page_obj.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in page_obj.paginator.page_range %}
+            {% if page_number == page_obj.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="{{ request.path }}?&page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="{{ request.path }}?&page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <!-- 다음페이지 -->
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ request.path }}?&page={{ page_obj.next_page_number }}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+ <!-- 배너 영역 -->
+  <script language="JavaScript" type="text/JavaScript">
+        var banner = new Array();
+
+         banner[0]="<a href='#'><img src='../../static/blog/image/banner01.png' border='0' width='100%' height='100%'></a>";
+         banner[1]="<a href='#'><img src='../../static/blog/image/banner02.png' width='100%' height='100%'></a>";
+         banner[2]="<a href='#'><img src='../../static/blog/image/banner03.png' border='0' width='100%' height='100%'></a>";
+         banner[3]="<a href='#'><img src='../../static/blog/image/banner04.png' border='0' width='100%' height='100%'></a>";
+         banner[4]="<a href='#'><img src='../../static/blog/image/banner05.png' border='0' width='100%' height='100%'></a>";
+         banner[5]="<a href='#'><img src='../../static/blog/image/banner06.png' border='0' width='100%' height='100%'></a>";
+         banner[6]="<a href='#'><img src='../../static/blog/image/banner07.png' border='0' width='100%' height='100%'></a>";
+
+
+         var random_banner = Math.floor(Math.random()*(banner.length));
+     </script>
+     <script>document.write(banner[random_banner]);</script>
+</body>
+
+{% endblock %}
+

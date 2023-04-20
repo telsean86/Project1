@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .post-form{
+    /*margin-left:30%;*/
+
+    }
+
+    .form-group{
+        margin-left:20%;
+
+    }
+    .mybtn{
+        text-align: center;
+        margin-left:57%;
+    }
+    .recent{
+   margin:20px;
+}
+#post-title:hover{
+    text-decoration: none;
+    color:#000000;
+}
+   h3{
+   margin: 2% 0% 1% 15%;
+   }
+.item{
+    list-style:none;
+    width:70%;
+    border:solid 1px #ccc;
+    border-radius:10px;
+    margin:0 auto;
+    padding:10px 10px 10px 20px;
+
+}
+
+   .notice_title{
+        margin-top:1%;
+        font-weight: 500;
+   }
+   .add-post{
+       margin-top:1%;
+       margin-left: 74%;
+       font-size:24px;
+       font-weight: normal;
+   }
+
+
+</style>
+<body>
+<form action="" method="post" class="post-form">
+    {% csrf_token %}
+     <h3>문의게시글 수정</h3>
+    <div class="post-form-container">
+        <div class="form-group">
+            <label for="input-title" style="font-weight: normal; font-size:20px;">제목 {{ id_title }} </label>
+            <input type="text" name="title" value="{{ post.title }}"
+                   id="input-title"  class="form-control" placeholder="글 제목" style="width:80%;">
+        </div>
+        <div class="form-group">
+            <label for="input-content" style="font-weight: normal; font-size:20px;">내용 {{ id_text }} </label>
+            <textarea type="text" name="text"
+                      id="input-content" class="form-control" rows="5" placeholder="글 내용" style="width:80%;">{{ post.text }}</textarea>
+        </div>
+        <div class="mybtn">
+        <button type="submit" class="save btn btn-outline-secondary">등록하기 </button>
+         <span class="save btn btn-outline-secondary" onClick="javascript:history.go(-1);">뒤로가기 </span></div>
+
+
+    </div>
+</form>
+</body>
+{% endblock %}

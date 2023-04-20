@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .alert-info {
+    color: #000;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+</style>
+<body>
+<br><br>
+
+ <div class="row">
+     <div class="col-md-2"></div>
+     <div class="col-md-8 panel panel-default">
+    {% if user.is_authenticated %}
+    <div class="alert alert-info">글이 삭제되었습니다.</div>
+    <a href="{% url 'post_list' %}">
+        <button type="button" class="btn btn-outline-secondary">목록가기</button>
+    </a>
+    {% else %}
+    <p>글의 작성자만 삭제할수있습니다.</p>
+    {% endif %}
+
+</div>
+ </div>
+
+</body>
+{% endblock %}

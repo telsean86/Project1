@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}- home{% endblock %}
+
+{% block content %}
+
+<html lang="ko">
+<head>
+    <!--  https://jeongnue.tistory.com/18 지우지마! 이거 나중에 쓸거야  -->
+    <meta charset="UTF-8">
+     <script src="https://kit.fontawesome.com/9c0b7c06e8.js" crossorigin="anonymous"></script>
+    <!--    폰트 어썸 주소-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <!--    jquery 연결 링크 -->
+    <title>My page</title>
+    <style>
+        *{margin:0px;padding:0px;}
+        body{background-image:url('//static/accounts/image/bg_header.gif');} /* 왜 안되지 */
+        #mypage{
+        margin-top:20px;
+        }
+         .mypage_list {
+            width:100%;
+            display:flex;
+         }
+
+        .mypage_list > li{
+            list-style:none;
+            margin:0 auto;
+            margin-left:2%;
+            margin-right:2%;
+            border: 1px solid #a0a0a0;
+            border-radius:10px;
+            width:400px; height:200px;
+            /*text-align:center;*/
+            text-align: center;
+            word-break: break-all;
+            word-break: keep-all;
+
+
+
+
+        }
+        .mypage_list > li :hover {
+
+        }
+        .mypage_sub_list:hover{
+            background-color: #e8e8e8;
+            transition: 0.5s;
+        }
+
+        .mypage_list > li > a {color:#333333; text-decoration: none;}
+        /* text-decoration : none; 은 밑줄 없애기 */
+
+        .mypage_list > li > a > p
+        {font-weight: lighter;
+        font-size:14px;
+        }
+
+        #mypage {
+            text-align: center;
+            font-weight: bold;
+            font-style:italic;
+            font-size: 24px;
+            color:#5D5D5D;
+        }
+        .mypage_list{
+        width: 80%;
+        margin:0 auto;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<!--<p id="mypage">{{user.get_username}}'s page</p>-->
+<p id="mypage">My Page</p>
+<br>
+<ul class="mypage_list">
+    <li class="mypage_sub_list"><a href="{% url 'orders:order_list' %}" title=""><br><i class="fa-regular fa-credit-card"></i>&nbsp ORDER<br><b>주문내역 조회</b><p>고객님께서 주문하신 상품의 주문내역을 확인할 수 있습니다.
+</p></a></li>  <!-- 주문내역조회 -->
+ <!-- 찜 -->
+    <li class="mypage_sub_list"><a href="{% url 'myboard' %}" title=""><br><i class="fa-regular fa-file-lines"></i>&nbsp BOARD<br><b>내가 쓴 글 보기</b><p>고객님께서 작성하신 글을 한 눈에 관리하실 수 있습니다.
+</p></a></li> <!-- 내가 쓴 글 보기 -->
+    <li class="mypage_sub_list"><a href="{% url 'change_password' %}" title=""><br><i class="fa-solid fa-lock"></i>&nbsp PROFILE<br><b>비밀번호 수정</b><p>회원이신 고객님의 비밀번호를 수정하는 공간입니다.
+</p></a></li> <!-- 개인정보수정 (비밀번호 변경) -->
+<!--    <i class="fa-solid fa-user"></i>-->
+    <li class="mypage_sub_list"> <a href="{% url 'delete' %}" title=""><br><i class="fa-solid fa-circle-xmark"></i>&nbsp UNRESISTER<br><b>회원 탈퇴</b><p>고객님의 회원 탈퇴 처리를 도와드립니다.</p></a></li> <!-- 회원탈퇴 -->
+</ul>
+
+
+</body>
+
+<br>
+<br>
+<br>
+</html>
+ <!-- 배너 영역 -->
+  <script language="JavaScript" type="text/JavaScript">
+        var banner = new Array();
+
+         banner[0]="<a href='#'><img src='../../static/blog/image/banner01.png' border='0' width='100%' height='100%'></a>";
+         banner[1]="<a href='#'><img src='../../static/blog/image/banner02.png' width='100%' height='100%'></a>";
+         banner[2]="<a href='#'><img src='../../static/blog/image/banner03.png' border='0' width='100%' height='100%'></a>";
+         banner[3]="<a href='#'><img src='../../static/blog/image/banner04.png' border='0' width='100%' height='100%'></a>";
+         banner[4]="<a href='#'><img src='../../static/blog/image/banner05.png' border='0' width='100%' height='100%'></a>";
+         banner[5]="<a href='#'><img src='../../static/blog/image/banner06.png' border='0' width='100%' height='100%'></a>";
+         banner[6]="<a href='#'><img src='../../static/blog/image/banner07.png' border='0' width='100%' height='100%'></a>";
+
+
+         var random_banner = Math.floor(Math.random()*(banner.length));
+     </script>
+     <script>document.write(banner[random_banner]);</script>
+{% endblock %}

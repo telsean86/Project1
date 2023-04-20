@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>주문완료</title>
+    <script>
+         $(function(){ /* 윈도우에 스크롤이 300px 이상 생기면
+        go_top 나타남, 아니라면 사라짐 */
+        $(window).scroll(function(){
+            if($(this).scrollTop()>=500){
+                $('.go_top').fadeIn();
+
+            }else{
+                $('.go_top').fadeOut();
+
+            }
+        });
+        // go_top 버튼 클릭하면 html,body의 스크롤양이 0으로 바뀌도록 0.5s 함
+        $('.go_top').click(function(e){
+            e.preventDefault();
+            $('html, body').stop().animate({scrollTop:0},500);
+        }); });
+    </script>
+    <style>
+    /* 위로가기 버튼 */
+    .go_top{
+            width:40px;
+            height:40px;
+            position: fixed;
+            background:#333;
+            color:#fff;
+            right:50px;
+            bottom:50px;
+            text-align: center;
+            line-height: 40px;
+
+            display:none;
+    }
+        *{
+        <!--        css초기화! base.html에 적용되어있는 스타일 상태를 해제함-->
+        font-family : 'Noto Sans KR', sans-serif;
+        margin:0;
+
+        }
+        #order_created_title{
+        <!-- 주문 완료 -->
+
+        margin-bottom:3%;
+        font-weight:800;
+        text-align:center;
+        color:#666;
+
+        }
+        .order_created_content{
+         margin:0 auto;
+         width:80%;
+         height:100%;
+       <!--  border:1px solid black; -->
+         position:relative;
+         margin-top:50px;
+
+
+        <!--    세로 가운데 정렬     -->
+        }
+
+        .order_created_content2{
+        border: 0px solid red;
+        border-bottom:1px solid black;
+        height:300px;
+        display: flex;
+        align-items: center;
+        margin:0 auto;
+        }
+        .order_created_icon{
+        padding-left:30%;
+        margin-right:2%;
+
+
+
+
+        }
+        #order_created_contents{
+        display:block;
+
+
+<!--        border:1px solid blue;-->
+        }
+        .sub_contents{
+        display:block;
+        margin-top:100px;
+       }
+
+       #myorder{
+        color:#ff7c98;
+       }
+
+       .orcre_title{
+       font-weight:600;}
+
+         .delete-button-input{
+                width:150px;
+                height:50px;
+                opacity:0.6;
+                border-radius:3%;
+                margin-left:88%;
+                font-weight: bold;
+                border:none;
+                text-align:center;
+          }
+               .delete-button-input:hover {
+
+                     opacity:1;
+               }
+<!--결제정보-->
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-style:solid;border-width:0px;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;
+          padding:10px 5px;word-break:normal;}
+        .tg th{border-style:solid;border-width:0px;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-baqh{background-color:#c0c0c0; color: #ffffff; font-weight:bold;  text-align:center;vertical-align:top}
+        .tg .tg-0lax{ padding-left:20px;background-color:#efefef; text-align:left;vertical-align:top}
+<!-- 주문 상품 정보 -->
+
+        .tg th{border-style:solid;border-width:0px;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-908g{color:#ffffff; background-color:#c0c0c0;border-color:#efefef;font-weight:bold;text-align:center;vertical-align:top}
+        .tg .tg-li6d{ background-color:#efefef; border-color:#efefef;text-align:center;vertical-align:top}
+        .tg .tg-ly6r{background-color:#efefef; border-color:#efefef;text-align:center;vertical-align:top}
+    </style>
+</head>
+<body>
+<br>
+<h4 id="order_created_title">주문완료</h4>
+
+
+<hr>
+<div class="order_created_content">
+    <div class="order_created_content2">
+    <image src="https://postfiles.pstatic.net/MjAyMjEwMTRfOTYg/MDAxNjY1NzI4MTc5Mjg4.geEZoaFQIXplEOlbeDjcXRixKpu08wYrRMBr5LnzDzUg.uYjSldrnc0VbhmT-oIR63m7sGuM28o9mFXyudX0rFa0g.PNG.pandk23/check.png?type=w773" alt="주문완료체크" class="order_created_icon" id="order_created_contents"></image>
+         <div id="order_created_contents">
+        <h5  class="orcre_title">고객님의 주문이 완료되었습니다.</h5>
+
+<!--        <div class="sub_contents">-->
+        <p>주문내역 및 배송에 관한 안내는 <a href="{% url 'orders:order_list' %}" id="myorder">주문조회</a>를 통하여 확인 가능합니다.</p>
+
+        <p>주문번호 : {{order.id}} <br>
+       주문날짜 : {{order.updated|date:'Y-m-d H:i'}} </p>
+    </div>
+    </div>
+<br><br><br>
+    <h5 style="font-weight:600;">&nbsp 결제 정보  </h5>
+<table class="tg" style="undefined;table-layout: fixed; width: 100%;">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 90%">
+</colgroup>
+<tbody>
+  <tr>
+                      {% load humanize %}
+
+    <td class="tg-baqh">결제 금액</td>
+    <td class="tg-0lax">{{order.get_total_price|intcomma}}원</td>
+  </tr>
+
+  <tr>
+    <td class="tg-baqh">고객 성함</td>
+    <td class="tg-0lax">{{order.user.username}}님</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">받는 주소</td>
+    <td class="tg-0lax">{{order.address}} {{order.postal_code}}</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">전화 번호</td>
+    <td class="tg-0lax">{{order.tel}}</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">전자 주소</td>
+    <td class="tg-0lax">{{order.email}}</td>
+  </tr>
+</tbody>
+</table>
+
+<br><br><br>
+<h5 style="font-weight:600;">&nbsp 주문 상품 정보  </h5>
+<table class="tg" style="undefined;table-layout: fixed; width: 100%; ">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+    <th class="tg-908g">이미지</th>
+    <th class="tg-908g">상품명</th>
+    <th class="tg-908g">수량</th>
+    <th class="tg-908g">개별가격</th>
+  </tr>
+</thead>
+<tbody>
+
+    {% for item in order.items.all %}
+
+  <tr>
+    <td class="tg-li6d">
+       <a href="{{item.product.get_absolute_url}}">
+        <img src="{{item.product.image.url}}" style="height:200px;"></a></td>
+    <td class="tg-ly6r" style="padding-top:100px; font-weight:600;">{{item.product.name}}</td>
+    <td class="tg-ly6r" style="padding-top:100px; font-weight:600;">{{item.quantity }}</td>
+    <td class="tg-ly6r" style="padding-top:100px; font-weight:600;">{{item.product.price|intcomma}}</td>
+  </tr>
+
+    {% endfor %}
+
+
+        </tbody>
+</table>
+
+<br><br><br>
+<!--    <a href="{% url 'orders:order_delete' %}"> <input type="button" class="delete-button-input" value="주문취소하기"> </a>-->
+    <a href="{% url 'shop:product_all' %}"> <input type="button" class="delete-button-input" value="쇼핑 계속하기"> </a>
+
+
+<a href="" class="go_top">
+    <i class="fas fa-arrow-up"></i>
+
+</a>
+
+
+
+
+
+</div>
+</body>
+</html>
+{% endblock %}

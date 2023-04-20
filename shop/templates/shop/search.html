@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<style>
+    .card{
+    margin:10px;
+    }
+    #none_search{
+       text-align: center;
+        font-weight: bold;
+        margin-top:3%;
+    }
+    #qqq{
+    text-align: center;
+        font-weight: bold;
+        }
+    #back{
+        font-size:16px;
+        padding-left:80%;
+    }
+</style>
+<br>
+    {% if not products %}
+<hr>
+        <h1 id="none_search">검색 결과가 없습니다</h1>
+
+                    <a href="#" id="back"><i class="fa-solid fa-backward" onClick="javascript:history.go(-1);">&nbsp 다시검색</i></a>
+
+<hr>
+    {% else %}
+<div id="qqq"><h3>검색하신 "{{q}}"에 대한 결과입니다.</h3></div>
+    <div class="row col-9" style="margin: 0 auto;">
+
+
+            {% for product in products %}
+
+                <div class="col-3">
+                    <div class="card">
+                        {% if product.image %}
+                      <img class="card-img-top" src="{{product.image.url}}" alt="Product Image">
+                        {% else %}
+
+                        {% endif %}
+                        <a href="{{product.get_absolute_url}}" id="product_detail">
+                      <div class="card-body">
+                          <strong class="card-title">{{product.name}}</strong>
+                        <a href="{{product.get_absolute_url}}" class="btn btn btn-outline-secondary btn-sm float-right">상세보기</a><br><br>
+                          <span class="price_badge">₩&nbsp{{product.price|intcomma}}</span>
+                      </div></a>
+                    </div>
+                </div>
+
+            {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock %}

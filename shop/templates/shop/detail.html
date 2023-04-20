@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Product Detail{% endblock %}
+{% block content %}
+<style>
+     .col-4{
+         margin-left:30;
+         margin-top:3%;
+         width:30%;
+         margin: 30px auto;
+     }
+    .detailcol{
+        text-align:left;
+        width:50%;
+        padding:5% 5% 0% 0%;
+    }
+    .detailcol p{
+    text-size:20px;
+    }
+    .badge{
+        font-size:34px;
+        font-weight: bold;
+    }
+
+    .badge2{
+        font-weight: bold;
+    }
+    #id_quantity{
+    text-align:right;
+    width:70px;
+    }
+    .buttons input{
+    margin:10px 10px 50px 0px ;
+    }
+    #id_quantity {
+    width: 30%;
+    border:1px solid #ccc;
+}
+    .explane{
+    margin: 50px auto;
+    }
+    .buttons a{
+
+    }
+
+</style>
+<body>
+        <div class="detailcontainer">
+            <div class="row">
+                <div class="col-4">
+                    <img src="{{product.image.url}}" width="60%" style="margin-left:45%;">
+                </div>
+                <div class="detailcol">
+                    <h1 class="display-6" style="font-weight:bold;">{{product.name}}</h1>
+                    <p><span class="badge">₩&nbsp{{product.price|intcomma}}</span></p>
+                    <hr>
+                    <p>{{product.description|linebreaks}}</p>
+                    <p>재고: {{product.stock}}개</p>
+
+            <div class="buttons">
+                <form action="{% url 'cart:product_add' product.id %}" method="post">
+                    {{add_to_cart}}
+                    {% csrf_token %}<br>
+                    {% if product.stock == 0 %}
+                    <a class="btn col-md-6"  value="SOLDOUT"style="height:50px; background-color:#666; color:#fff;">SOLDOUT</a>
+                    {% else %}
+                    <a><input type="submit" class="btn btn-outline-secondary col-md-3" onClick="alert('최대 구매가능 수량 {{ product.stock }}개! ')" value="장바구니"style="height:50px"></a>
+                    <a><input type="submit" class='btn btn-outline-secondary col-md-3' onClick="alert('최대 구매가능 수량 {{ product.stock }}개! ')" value="구매하기" style="background-color:#666; color:#fff; height:50px;"></a>
+                    {% endif %}
+                    </form>
+            </div><br>
+                    <!--<a href="#" ><i class="fa-solid fa-backward" onClick="javascript:history.go(-1);">&nbsp 뒤로가기</i></a>-->
+
+                </div>
+
+            </div>
+        <hr>
+        </div>
+<main>
+    <div class="explane" style="text-align:center;">
+        <img src="/../static/shop/image/base2.jpg" width="50%"><br>
+        <img src="{{product.image.url}}" width="40%">
+        <p>{{product.description|linebreaks}}</p>
+    </div>
+</main>
+</body>
+
+
+
+{% endblock %}

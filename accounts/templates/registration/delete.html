@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}- home{% endblock %}
+
+{% block content %}
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/9c0b7c06e8.js" crossorigin="anonymous"></script>
+    <!--    폰트 어썸 주소-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <!--    jquery 연결 링크 -->
+    <title>회원탈퇴</title>
+    <style>
+          .deletetitle{
+                font-weight: 500;
+                margin-left:1%;
+                margin-top:1%;
+                color:#666;
+          }
+          #title2{
+                color:#666666;
+                font-size:18px;
+          }
+          #title3, .title4{
+                color:#666666;
+          }
+          .title1{
+                padding-left:10px;
+                padding-top:10px;
+                width: 98%;
+
+          }
+          .delete_caution{
+                margin:0 auto;
+
+                width: 98%;
+                height: 100%;
+                border:1px solid #a8a8a8;
+          }
+          .delete_caution_top{
+                padding-left:10px;
+                padding-top:10px;
+          }
+          .delete_caution_check{
+                width:100%;
+                height:50px;
+                padding-left:10px;
+                padding-top:10px;
+                background-color: #f5f5f5;
+                border-top:1px solid #a8a8a8;
+          }
+          #caution_final{
+                color:red;
+          }
+          .pw_check{
+                padding-top:10px;
+
+                margin:0 auto;
+                width: 98%;
+                height: 100%;
+                /*border:1px solid #a8a8a8;*/
+          }
+          .delete-button-input{
+                width:120px;
+                height:50px;
+                opacity:0.6;
+                border-radius:3%;
+                margin-left:90%;
+                font-weight: bold;
+                border:none;
+          }
+               .delete-button-input:hover {
+
+                     opacity:1;
+               }
+
+               .btnlist{
+               list-style:none;
+               display:flex;
+               margin-left:70%;
+
+               }
+               .btnlist > li {
+               margin-right:10px;
+               }
+    </style>
+</head>
+
+<body>
+
+<h3 class="deletetitle">&nbsp회원 탈퇴</h3>
+<hr>
+<div class="title1">
+<b class="deletetitle" id="title2">&nbsp&nbsp{{ user.username }}님, 날꾸 서비스를 이용하시는데 불편함이 있으셨나요?</b>
+<p id="title3">&nbsp&nbsp이용 불편 및 각종 문의 사항은 고객센터로 문의 주시면 성심 성의껏 답변 드리겠습니다.<br>
+&nbsp&nbsp- '자주 묻는 질문 / 전화 문의 : 1234 - 5678 (365일 오전 9시-오후6시)</p>
+</div>
+
+<div class="delete_caution">
+      <div class="delete_caution_top">
+      <b class="title4">회원 탈퇴 전, 유의사항을 확인해 주시기 바랍니다.</b>
+      <p class="title4">
+            -회원탈퇴 시 회원전용 웹 서비스 이용이 불가합니다.<br>
+            -거래정보가 있는 경우, 전자상거래 등에서의 소비자 보호에 관한 법률에 따라 계약 또는 청약철회에 관한 기록, 대금결제 및 재화 등의 공급에 관한 기록은 5년동안 보존됩니다.<br>
+            - 유효기간이 경과되지 않은 미사용 쿠폰관련 정보는 유효기간 만료일까지 보관되며, 탈퇴 후에도 유효기간 내 사용하실 수 있습니다.<br>
+            - 유효기간 내 사용하지 못한 미사용 쿠폰은 구매금액의 70%를 날꾸캐시로 적립해 드리나, 탈퇴시 적립 받을 수 없습니다.<br>
+            - 보유하셨던 적립금은 탈퇴와 함께 삭제되며 환불되지 않습니다.<br>
+            - 회원탈퇴 후 날꾸 서비스에 입력하신 상품문의 및 후기, 댓글은 삭제되지 않으며, 회원정보 삭제로 인해 작성자 본인을 확인할 수 없어 편집 및 삭제처리가 원천적으로 불가능 합니다.<br>
+            - 상품문의 및 후기, 댓글 삭제를 원하시는 경우에는 먼저 해당 게시물을 삭제하신 후 탈퇴를 신청하시기 바랍니다.<br>
+      </p>
+      </div>
+
+
+      <div class="delete_caution_check">
+            <input type="checkbox"> <b>&nbsp 상기 날꾸 회원탈퇴 시 처리사항 안내를 확인하였음에 동의합니다.</b>
+      </div>
+<!--이미 결제가 완료된 건은 탈퇴로 취소되지 않습니다.-->
+</div>
+<br>
+<div class="pw_check">
+
+      {% if request.user == user %}
+        <form action="/accounts/delete/", method="POST" style="margin-left:20px;">{% csrf_token %}
+              <p>보안을 위해 회원님의 비밀번호를 확인합니다.</p>
+      <!--           <input type="hidden" name="csrfmiddlewaretoken" value="">-->
+                 <div class="delete-form">
+                비밀번호 : <input class="delete-text-input" type="password", name="password_del">
+
+                 <br><br>
+                       <p id="caution_final"><i class="fas fa-exclamation-triangle"></i><b> 사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능 합니다!</b><br>
+                        탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니 신중하게 선택하시기 바랍니다.</p>
+                     <ul class="btnlist">
+                         <li><input class="delete-button-input" type="submit" value="회원탈퇴"></li>
+                         <li><input type="button" class="delete-button-input" value="취소하기" onClick="javascript:history.go(-1);"></li>
+                    </ul>
+                 </div>
+             </form>
+
+      {% endif %}
+</div>
+
+<hr>
+
+
+
+
+</body>
+</html>
+{% endblock %}

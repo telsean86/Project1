@@ -1,0 +1,101 @@
+
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}
+Shopping Cart
+{% endblock %}
+
+{% block content %}
+<style xmlns:shop="http://www.w3.org/1999/xhtml">
+    .table{
+    width:90%;
+    margin:3% auto;
+    }
+    .text-right{
+    margin:0% 5%;
+    }
+    #id_quantity{
+    text-align:right;
+    width:70px;
+    }
+    .coupon{
+    margin: 0% 5%;
+    }
+    th{
+    text-align:center;
+    }
+    td{
+        text-align:center;
+    }
+</style>
+<table class="table table-striped" xmlns:cart="http://www.w3.org/1999/xhtml" xmlns:shop="http://www.w3.org/1999/xhtml"
+       xmlns:shop="http://www.w3.org/1999/xhtml" xmlns:shop="http://www.w3.org/1999/xhtml"
+       xmlns:orders="http://www.w3.org/1999/xhtml" xmlns:orders="http://www.w3.org/1999/xhtml"
+       xmlns:shop="http://www.w3.org/1999/xhtml" xmlns:shop="http://www.w3.org/1999/xhtml">
+        <thead>
+            <tr>
+                <th scope="col" width="20%">상품이미지 </th>
+                <th scope="col">상품 </th>
+                <th scope="col" width="15%">수량 </th>
+                <th scope="col">삭제</th>
+                <th scope="col">개별 금액</th>
+                <th scope="col">합산 금액 </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                <tr>
+                    <th scope="row">
+                        <a href="{{product.get_absolute_url}}">
+                            <img src="{{product.image.url}}" class="img-thumbnail">
+                        </a>
+                    </th>
+                    <td>{{product.name}}</td>
+                    <td>
+                        <form action="{% url 'cart:product_add' product.id %}" method="post">
+                            {% csrf_token %}
+                            {{item.quantity_form.quantity}}
+                            {{item.quantity_form.is_update}}
+                            <input type="submit" class="btn btn-outline-secondary btn-sm" value="수량변경">
+                        </form>
+                    </td>
+                    <td><a href="{% url 'cart:product_remove' product.id%}">삭제하기</a></td>
+                    <td class="num">{{item.price|intcomma}}</td>
+                    <td class="num">{{item.total_price|intcomma}}</td>
+                </tr>
+            {% endwith %}
+            {% endfor %}
+            {% if cart.coupon %}<!--#쿠폰이 있을때만 열림-->
+            <tr class="total">
+                <td>할인전 금액</td>
+                <td colspan="4"></td>
+                <td class="num">{{cart.get_product_total|intcomma}}</td>
+            </tr>
+            <tr class="coupon">
+                <td>{{cart.coupon.code}} 쿠폰 </td>
+                <td colspan="4"></td>
+                <td>- {{cart.get_discount_total|intcomma}}</td>
+            </tr>
+            {% endif %}<!— 쿠폰이 없을 경우 아래 코드로 진행—>
+        <tr class="coupon">
+            <td>총 금액</td>
+            <td colspan="4"></td>
+            <td class="num">{{cart.get_total_price|intcomma}}</td>
+        </tr>
+        </tbody>
+    </table>
+<div class="coupon">
+    <form action="{% url 'coupon:add' %}" method="post">
+        {% csrf_token %}
+        {{add_coupon}}
+        <input type="submit" class="btn btn-outline-secondary btn-sm" value="등록">
+    </form>
+</div>
+<br>
+    <p class="text-right">
+        <a href="{% url "shop:product_all" %}" class="btn btn-outline-secondary">쇼핑 계속하기</a>
+        <a href="{% url "orders:order_create" %}" class='btn btn-outline-secondary'>구매하기</a>
+
+    </p>
+{% endblock %}
